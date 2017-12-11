@@ -1,10 +1,10 @@
-package com.oureda.thunder.daydaypicture.util;
+package com.example.messenger.util;
 
 
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
+import com.example.messenger.manager.CacheManager;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,7 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 import static android.content.ContentValues.TAG;
 

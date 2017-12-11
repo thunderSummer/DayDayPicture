@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -31,27 +31,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.oureda.thunder.daydaypicture.base.Installation;
-import com.oureda.thunder.daydaypicture.base.PictureControl;
-import com.oureda.thunder.daydaypicture.base.PictureData;
-import com.oureda.thunder.daydaypicture.base.ScreenInfo;
-import com.oureda.thunder.daydaypicture.imageSlide.RoundButton;
-import com.oureda.thunder.daydaypicture.imageSlide.RoundProgressBarWidthNumber;
-import com.oureda.thunder.daydaypicture.listener.DownloadListener;
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
-import com.oureda.thunder.daydaypicture.manager.StringManager;
-import com.oureda.thunder.daydaypicture.service.DownLoadService;
-import com.oureda.thunder.daydaypicture.service.UpdateService;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
-import com.oureda.thunder.daydaypicture.util.HttpUtils;
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
+import com.example.messenger.base.Installation;
+import com.example.messenger.base.PictureControl;
+import com.example.messenger.base.PictureData;
+import com.example.messenger.base.ScreenInfo;
+import com.example.messenger.imageSlide.RoundButton;
+import com.example.messenger.imageSlide.RoundProgressBarWidthNumber;
+import com.example.messenger.listener.DownloadListener;
+import com.example.messenger.manager.CacheManager;
+import com.example.messenger.manager.StringManager;
+import com.example.messenger.service.DownLoadService;
+import com.example.messenger.service.UpdateService;
+import com.example.messenger.util.FileUtil;
+import com.example.messenger.util.HttpUtils;
+import com.example.messenger.util.SharedPreferenceUtil;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,13 +57,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.oureda.thunder.daydaypicture.base.UnZip.analyzeJsonToArray;
-import static com.oureda.thunder.daydaypicture.base.UnZip.upZipFile;
-
 public class HelloActivity extends AppCompatActivity {
     private static String TAG = "HelloActivity------>";
     private BroadcastReceiver broadcastReceiver;
-    private RoundButton roundButton;
     private TextView UUID;
     private RoundProgressBarWidthNumber roundProgressBarWidthNumber;
     private String UUIDString;
@@ -77,6 +68,7 @@ public class HelloActivity extends AppCompatActivity {
     private Switch aSwitch;
     private TextView autoTime;
     private TextView update;
+    private TextView enter;
     private TextView about;
     private PackageManager packageManager;
     private PackageInfo packageInfo;
@@ -105,7 +97,7 @@ public class HelloActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(int type) {
-                    roundProgressBarWidthNumber.setVisibility(View.GONE);
+                    roundProgressBarWidthNumber.setVisibility(View.INVISIBLE);
                     String content;
                     if (type == 1) {
                         content = "获取资源目录成功";
@@ -121,7 +113,6 @@ public class HelloActivity extends AppCompatActivity {
                         }).start();
                     } else {
                         content = "获取资源文件成功";
-                        roundButton.setVisibility(View.VISIBLE);
                         startActivity(new Intent(HelloActivity.this, NewMainActivity.class));
                     }
                     Toast.makeText(HelloActivity.this, content, Toast.LENGTH_LONG).show();
@@ -130,14 +121,12 @@ public class HelloActivity extends AppCompatActivity {
                 @Override
                 public void onFailed() {
                     Toast.makeText(HelloActivity.this, "资源文件获取失败，请重试", Toast.LENGTH_LONG).show();
-                    roundProgressBarWidthNumber.setVisibility(View.GONE);
-                    roundButton.setVisibility(View.VISIBLE);
+                    roundProgressBarWidthNumber.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
                 public void after() {
-                    roundButton.setVisibility(View.VISIBLE);
-                    roundProgressBarWidthNumber.setVisibility(View.GONE);
+                    roundProgressBarWidthNumber.setVisibility(View.INVISIBLE);
                 }
             });
         }
@@ -175,12 +164,12 @@ public class HelloActivity extends AppCompatActivity {
         }
 
 
-      new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    verifyScreen();
-            }
-        }).start();
+//      new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                    verifyScreen();
+//            }
+//        }).start();
 
 
     }
@@ -338,7 +327,6 @@ public class HelloActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                roundButton.setVisibility(View.GONE);
                 roundProgressBarWidthNumber.setVisibility(View.VISIBLE);
             }
         });
@@ -358,10 +346,11 @@ public class HelloActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_hello);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_hello);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -394,10 +383,9 @@ public class HelloActivity extends AppCompatActivity {
         });
         UUID = (TextView) findViewById(R.id.id_hello);
         roundProgressBarWidthNumber = (RoundProgressBarWidthNumber) findViewById(R.id.id_progress);
-        roundButton = (RoundButton) findViewById(R.id.enter_hello);
+        enter = (TextView) findViewById(R.id.enter_hello);
 
-
-        roundButton.setOnClickListener(new View.OnClickListener() {
+        enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Thread(new Runnable() {
@@ -420,7 +408,6 @@ public class HelloActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                checkUpdate();
-               // showDialog("ss");
             }
         });
     }
@@ -505,6 +492,12 @@ public class HelloActivity extends AppCompatActivity {
                             });
                         }
                     } catch (IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(HelloActivity.this,"无法连接到服务器，请检查网络",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         e.printStackTrace();
                     }
 

@@ -1,9 +1,8 @@
-package com.oureda.thunder.daydaypicture.service;
+package com.example.messenger.service;
 
 import android.os.AsyncTask;
-import android.os.Environment;
 
-import com.oureda.thunder.daydaypicture.util.FileUtil;
+import com.example.messenger.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;

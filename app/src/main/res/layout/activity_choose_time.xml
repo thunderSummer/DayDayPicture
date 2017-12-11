@@ -1,10 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oureda.thunder.daydaypicture.ChooseTimeActivity">
+    android:orientation="vertical"
+    tools:context="com.example.messenger.ChooseTimeActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_time"
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:background="@color/colorBlueTwo"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_marginTop="24dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:text="请设定自动启动时间"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:text="Messenger将在设定的时间自动启动"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/time_choose_tv_time"
+            android:layout_marginTop="48dp"
+            android:layout_gravity="center"
+            android:layout_width="120dp"
+            android:textColor="@color/colorWhite"
+            android:text=" 选 择 时 间 "
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@color/colorBlueTwo"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/before_choose_time"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="48dp"
+            android:textColor="@color/colorBlack"
+            android:text="请选择自动启动时间"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/after_choose_time"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="28sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorBlack"
+                android:text="Messenger将在"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/time_show_tv_time"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorBlueTwo"
+                android:text="2017年八月21日14点47分"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="28sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/colorBlack"
+                android:text="自动启动"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/time_stop_tv_time"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="center"
+                android:layout_width="120dp"
+                android:textColor="@color/colorWhite"
+                android:text=" 取 消 设 定 "
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:background="@color/colorBlueTwo"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

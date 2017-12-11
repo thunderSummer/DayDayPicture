@@ -1,8 +1,8 @@
-package com.oureda.thunder.daydaypicture.base;
+package com.example.messenger.base;
 
 import android.util.Log;
 
-import com.oureda.thunder.daydaypicture.util.FileUtil;
+import com.example.messenger.util.FileUtil;
 
 import org.json.JSONObject;
 

@@ -4,12 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oureda.thunder.daydaypicture.TestActivity">
-    <FrameLayout
-        android:id="@+id/frame_layout"
+    android:orientation="vertical"
+    tools:context="com.example.messenger.TestActivity">
+    <com.example.messenger.imageSlide.RoundProgressBarWidthNumber
+        android:id="@+id/id_progress02"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:padding="5dp"
+        android:progress="30" />
 
-    </FrameLayout>
+    <com.example.messenger.imageSlide.RoundProgressBarWidthNumber
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:padding="5dp"
+        android:progress="0"
+        android:id="@+id/id_progress03"
+        app:progress_reached_bar_height="20dp"
+        app:progress_text_color="#ffF53B03"
+        app:Radius="60dp" />
+
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.util;
+package com.example.messenger.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,6 +24,9 @@ public class SharedPreferenceUtil {
         prefsUtil.context = paramContext;
         prefsUtil.prefs = prefsUtil.context.getSharedPreferences(paramString, 0);
         prefsUtil.editor = prefsUtil.prefs.edit();
+    }
+    public long getLong(String s){
+        return this.prefs.getLong(s,0);
     }
 
     public boolean getBoolean(String paramString)
@@ -54,6 +57,10 @@ public class SharedPreferenceUtil {
     public void putBoolean(String paramString,boolean value)
     {
         this.editor.putBoolean(paramString, value);
+        this.editor.apply();
+    }
+    public void putLong(String s,long l){
+        this.editor.putLong(s,l);
         this.editor.apply();
     }
 

@@ -1,9 +1,9 @@
-package com.oureda.thunder.daydaypicture.base;
+package com.example.messenger.base;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
+import com.example.messenger.util.SharedPreferenceUtil;
 
 import org.litepal.LitePal;
 

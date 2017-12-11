@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 public class MyAlarmReceiver extends BroadcastReceiver {
 
@@ -19,17 +18,18 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         // an Intent broadcast.
         Log.d("MyAlarmReceiver", "onReceive: 自动启动程序");
         Intent intent1  = new Intent(context,HelloActivity.class);
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent1,0);
-            Notification notification = new NotificationCompat.Builder(context).setContentTitle("天天看图，系统消息")
-                .setContentText("点我进入主界面")
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.icon)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.icon))
-                .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-            notificationManager.notify(1234,notification);
+//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent1,0);
+//            Notification notification = new NotificationCompat.Builder(context).setContentTitle("天天看图，系统消息")
+//                .setContentText("点我进入主界面")
+//                .setWhen(System.currentTimeMillis())
+//                .setSmallIcon(R.mipmap.icon)
+//                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.icon))
+//                .setContentIntent(pendingIntent)
+//                    .setAutoCancel(true)
+//                    .build();
+//            notificationManager.notify(1234,notification);
+        Log.d("sss", "onReceive: sssssssssssssssss");
 
         context.startActivity(intent1);
     }

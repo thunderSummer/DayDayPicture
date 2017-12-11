@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.util;
+package com.example.messenger.util;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
+import com.example.messenger.manager.CacheManager;
 
 /**
  * Created by thunder on 17-7-10.
@@ -30,7 +30,7 @@ public class PollingUtils {
 
         //使用AlarmManger的setRepeating方法设置定期执行的时间间隔（seconds秒）和需要执行的Service
         manager.setRepeating(AlarmManager.ELAPSED_REALTIME, triggerAtTime,
-                CacheManager.getInstance().getPullTime()*60*1000, pendingIntent);
+                10*1000, pendingIntent);
     }
     //停止轮询服务
     public static void stopPollingService(Context context, Class<?> cls,String action) {

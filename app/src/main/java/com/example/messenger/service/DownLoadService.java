@@ -1,13 +1,12 @@
-package com.oureda.thunder.daydaypicture.service;
+package com.example.messenger.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.oureda.thunder.daydaypicture.listener.DownloadListener;
+import com.example.messenger.listener.DownloadListener;
 
 import java.util.List;
 

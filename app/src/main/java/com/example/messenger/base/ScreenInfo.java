@@ -1,6 +1,4 @@
-package com.oureda.thunder.daydaypicture.base;
-
-import android.graphics.Paint;
+package com.example.messenger.base;
 
 /**
  * Created by thunder on 17-7-9.

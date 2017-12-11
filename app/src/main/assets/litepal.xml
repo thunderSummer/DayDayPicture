@@ -4,7 +4,6 @@
 
     <version value="2" ></version>
     <list>
-        <mapping class="com.oureda.thunder.daydaypicture.base.Picture" />
-        <mapping class="com.oureda.thunder.daydaypicture.base.PictureOrderSave"/>
+        <mapping class="com.example.messenger.base.PictureData" />
     </list>
 </litepal>

@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.base;
+package com.example.messenger.base;
 
 /**
  * Created by thunder on 17-7-11.

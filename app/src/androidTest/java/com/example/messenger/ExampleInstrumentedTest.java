@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

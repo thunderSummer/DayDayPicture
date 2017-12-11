@@ -1,35 +1,45 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
-import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
+import com.example.messenger.manager.CacheManager;
+import com.example.messenger.service.FourGroundService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ChooseTimeActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView timeChoose;
     private TextView timeShow;
     private TextView timeStop;
-    private TextView timeStart;
+    private LinearLayout after;
+    private TextView before;
     private long interval;
     private AlarmManager alarmManager;
     private PendingIntent pi;
@@ -38,27 +48,41 @@ public class ChooseTimeActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_choose_time);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_time);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        setContentView(R.layout.activity_choose_time);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
+            Log.d("sss", "onCreate: ");
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.back_icon);
         }
         timeChoose = (TextView) findViewById(R.id.time_choose_tv_time);
         timeShow = (TextView) findViewById(R.id.time_show_tv_time);
-        timeStart = (TextView) findViewById(R.id.time_start_tv_time);
+        after = (LinearLayout) findViewById(R.id.after_choose_time);
+        before = (TextView) findViewById(R.id.before_choose_time);
         timeStop = (TextView) findViewById(R.id.time_stop_tv_time);
         timeStop.setOnClickListener(this);
         timeChoose.setOnClickListener(this);
-        timeStart.setOnClickListener(this);
-        timeShow.setText(CacheManager.getInstance().getAutoTime());
 
+        changeView();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -66,9 +90,6 @@ public class ChooseTimeActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
             case R.id.time_choose_tv_time:
                 showTimePicker(timeShow);
-                break;
-            case R.id.time_start_tv_time:
-                startService();
                 break;
             case R.id.time_stop_tv_time:
                 endService();
@@ -101,6 +122,7 @@ public class ChooseTimeActivity extends AppCompatActivity implements View.OnClic
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                startService();
             }
         }, hour, minute, true);
         //实例化DatePickerDialog对象
@@ -119,37 +141,45 @@ public class ChooseTimeActivity extends AppCompatActivity implements View.OnClic
 
     }
     private void startService(){
-        alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);
         long interval = date.getTime()-System.currentTimeMillis();
-        //Intent intent = new Intent(ChooseTimeActivity.this,HelloActivity.class);
-       // pi = PendingIntent.getActivity(ChooseTimeActivity.this,0,intent,0);
-        Intent intent = new Intent(ChooseTimeActivity.this,MyAlarmReceiver.class);
-        pi = PendingIntent.getBroadcast(ChooseTimeActivity.this,0,intent,0);
-        Log.d("ss", "startService: "+interval);
+
         if(interval<60000){
             Toast.makeText(ChooseTimeActivity.this,"你设置的时间不符合实际要求(需大于当前时间的一分钟)",Toast.LENGTH_SHORT).show();
         }else{
-            if (Build.VERSION.SDK_INT>=19){
-                //API19以上使用
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP,date.getTime(),pi);
-            }else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP,date.getTime(),pi);
-            }
             Toast.makeText(ChooseTimeActivity.this,"自启动设置成功",Toast.LENGTH_SHORT).show();
             CacheManager.getInstance().setAutoTime(timeShow.getText().toString());
+            CacheManager.getInstance().setIntervalLong(date.getTime());
+            changeView();
+            Intent intent = new Intent(this,FourGroundService.class);
+            startService(intent);
         }
     }
     private void endService(){
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        if(pi!=null){
-            alarmManager.cancel(pi);
-        }
+        CacheManager.getInstance().setAutoTime("");
+        changeView();
         Toast.makeText(ChooseTimeActivity.this,"自启动取消成功",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent("com.example.thunder.messenger.AutoStart");
+        sendBroadcast(intent);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        long timeLong = CacheManager.getInstance().getIntervalLong();
+        if(timeLong!=-1){
+            startService();
+        }
         finish();
+    }
+    private void changeView(){
+        String timeSetting = CacheManager.getInstance().getAutoTime();
+        if(timeSetting.equals("自启动时间")){
+            after.setVisibility(View.GONE);
+            before.setVisibility(View.VISIBLE);
+        }else{
+            before.setVisibility(View.GONE);
+            after.setVisibility(View.VISIBLE);
+            timeShow.setText(timeSetting);
+        }
     }
 }

@@ -1,34 +1,24 @@
-package com.oureda.thunder.daydaypicture.service;
+package com.example.messenger.service;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.icu.text.LocaleDisplayNames;
 import android.os.IBinder;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
+import com.example.messenger.util.PollingUtils;
 import com.google.gson.Gson;
-import com.oureda.thunder.daydaypicture.NewMainActivity;
-import com.oureda.thunder.daydaypicture.R;
-import com.oureda.thunder.daydaypicture.base.MD5;
-import com.oureda.thunder.daydaypicture.base.PictureControl;
-import com.oureda.thunder.daydaypicture.base.PictureData;
-import com.oureda.thunder.daydaypicture.base.PollingData;
-import com.oureda.thunder.daydaypicture.base.ScreenInfo;
-import com.oureda.thunder.daydaypicture.listener.DownloadListener;
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
-import com.oureda.thunder.daydaypicture.manager.StringManager;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
-import com.oureda.thunder.daydaypicture.util.HttpUtils;
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
-
-import org.json.JSONObject;
+import com.example.messenger.base.MD5;
+import com.example.messenger.base.PictureControl;
+import com.example.messenger.base.PictureData;
+import com.example.messenger.base.PollingData;
+import com.example.messenger.base.ScreenInfo;
+import com.example.messenger.listener.DownloadListener;
+import com.example.messenger.manager.CacheManager;
+import com.example.messenger.manager.StringManager;
+import com.example.messenger.util.FileUtil;
+import com.example.messenger.util.HttpUtils;
+import com.example.messenger.util.SharedPreferenceUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,9 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Response;
-
-import static com.oureda.thunder.daydaypicture.base.UnZip.analyzeJsonToArray;
-import static com.oureda.thunder.daydaypicture.base.UnZip.upZipFile;
 
 
 public class PollingService extends Service {
@@ -75,21 +62,38 @@ public class PollingService extends Service {
                 }
                 Response r =HttpUtils.post(StringManager.URL+"request",new HttpUtils.Param("uuid",SharedPreferenceUtil.getInstance().getString("uuid")));
                 String content = r.body().string();
+                Log.d("content ====", "run: "+content);
                 PollingData pollingData = new Gson().fromJson(content,PollingData.class);
-                CacheManager.getInstance().setPullTime(Integer.valueOf(pollingData.data.getTime()));
-                CacheManager.getInstance().setScreenMD5(pollingData.data.getMd5());
-                Log.d("sss", "run: "+CacheManager.getInstance().getScreenMD5()+"  ddd   "+MD5.getFileMD5String(file));
-                if(!CacheManager.getInstance().getScreenMD5().equalsIgnoreCase(MD5.getFileMD5String(file))){
-                    Response response =HttpUtils.post(StringManager.URL+"request_resource",new HttpUtils.Param("uuid",SharedPreferenceUtil.getInstance().getString("uuid")));
-                    String jsonContent = response.body().string();
-                    Log.d("sssssss", "run: "+jsonContent);
-                    ScreenInfo screenInfo = new Gson().fromJson(jsonContent,ScreenInfo.class);
-                    List<String> stringList = new ArrayList<>();
-                    stringList.add(screenInfo.data.getJson_url());
-                    jsonUrl = screenInfo.data.getJson_url();
-                    downloadTask = new DownloadTask(downloadListener,stringList);
-                    downloadTask.execute(stringList.size());
-                }
+
+                    CacheManager.getInstance().setPullTime(Integer.valueOf(pollingData.data.getTime()));
+                    CacheManager.getInstance().setScreenMD5(pollingData.data.getMd5());
+                    if(!CacheManager.getInstance().getScreenMD5().equalsIgnoreCase(MD5.getFileMD5String(file))){
+                        Response response =HttpUtils.post(StringManager.URL+"request_resource",new HttpUtils.Param("uuid",SharedPreferenceUtil.getInstance().getString("uuid")));
+                        String jsonContent = response.body().string();
+                        Log.d("sssssss", "run: "+jsonContent);
+                        ScreenInfo screenInfo =null;
+                        try {
+                           screenInfo = new Gson().fromJson(jsonContent,ScreenInfo.class);
+                        }catch (Exception e){
+                            Intent intent = new Intent("com.oureda.thunder.daydaypicture.RECEIVER");
+                            intent.putExtra("type",2);
+                            sendBroadcast(intent);
+                        }
+
+                        if(screenInfo==null||screenInfo.data==null){
+                            Intent intent = new Intent("com.oureda.thunder.daydaypicture.RECEIVER");
+                            intent.putExtra("type",2);
+                            sendBroadcast(intent);
+                        }else{
+                            List<String> stringList = new ArrayList<>();
+                            stringList.add(screenInfo.data.getJson_url());
+                            jsonUrl = screenInfo.data.getJson_url();
+                            downloadTask = new DownloadTask(downloadListener,stringList);
+                            downloadTask.execute(stringList.size());
+                        }
+
+                    }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -143,7 +147,8 @@ public class PollingService extends Service {
                     e.printStackTrace();
                 }
             }else{
-                Intent intent = new Intent("com.oureda.thunder.daydaypicture.RECEIVER");
+                Intent intent = new Intent("com.example.thunder.messenger");
+                intent.putExtra("type",1);
                 sendBroadcast(intent);
             }
         }

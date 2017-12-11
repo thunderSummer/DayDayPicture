@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.manager;
+package com.example.messenger.manager;
 
 /**
  * Created by thunder on 17-5-24.

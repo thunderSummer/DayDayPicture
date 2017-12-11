@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.base;
+package com.example.messenger.base;
 
 import android.content.Context;
 

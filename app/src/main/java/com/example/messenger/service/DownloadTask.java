@@ -1,14 +1,13 @@
-package com.oureda.thunder.daydaypicture.service;
+package com.example.messenger.service;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.oureda.thunder.daydaypicture.base.MD5;
-import com.oureda.thunder.daydaypicture.listener.DownloadListener;
-import com.oureda.thunder.daydaypicture.manager.CacheManager;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
-import com.oureda.thunder.daydaypicture.util.HttpUtils;
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
+import com.example.messenger.base.MD5;
+import com.example.messenger.listener.DownloadListener;
+import com.example.messenger.manager.CacheManager;
+import com.example.messenger.util.FileUtil;
+import com.example.messenger.util.HttpUtils;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,22 +1,19 @@
-package com.oureda.thunder.daydaypicture.imageSlide;
+package com.example.messenger.imageSlide;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
 
-import com.oureda.thunder.daydaypicture.base.MyApplication;
-import com.oureda.thunder.daydaypicture.manager.StringManager;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
+import com.example.messenger.base.MyApplication;
+import com.example.messenger.manager.StringManager;
+import com.example.messenger.util.FileUtil;
+import com.example.messenger.util.SharedPreferenceUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by thunder on 17-5-24.

@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.imageSlide;
+package com.example.messenger.imageSlide;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,22 +7,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
-import android.os.MessageQueue;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
 import java.io.File;
-import java.util.List;
 import java.util.Random;
 
-import com.oureda.thunder.daydaypicture.base.MyApplication;
-import com.oureda.thunder.daydaypicture.listener.ImageChangeListener;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
+import com.example.messenger.base.MyApplication;
+import com.example.messenger.listener.ImageChangeListener;
+import com.example.messenger.util.FileUtil;
 
 import static android.content.ContentValues.TAG;
 
@@ -151,7 +148,7 @@ public class BaseImage extends View {
         else if(count1>current1){
             Message message = new Message();
             message.what=START_ANIMOTION;
-            handler.sendMessageDelayed(message,50);
+            handler.sendMessageDelayed(message,10);
         }else if(count1<=current1){
             current++;
             if(current>=bitmapFactory.getEnd()||current<start){
@@ -239,7 +236,7 @@ public class BaseImage extends View {
         else if(count1>current1){
             Message message = new Message();
             message.what=START_ANIMOTION;
-            handler.sendMessageDelayed(message,50);
+            handler.sendMessageDelayed(message,10);
         }else if(count1<=current1){
             current++;
             if(current>=bitmapFactory.getEnd()||current<start){
@@ -284,7 +281,7 @@ public class BaseImage extends View {
         } else if(current1<count1){
             Message message = new Message();
             message.what=START_ANIMOTION;
-            handler.sendMessageDelayed(message,100);
+            handler.sendMessageDelayed(message,50);
         }else if(current1==count1){
 
             current1=0;
@@ -348,7 +345,7 @@ public class BaseImage extends View {
         }else if(current1<count1){
             Message message = new Message();
             message.what=START_ANIMOTION;
-            handler.sendMessageDelayed(message,100);
+            handler.sendMessageDelayed(message,50);
         }
         canvas.drawBitmap(currentBitmap,-centerX,-centerY,new Paint());
     }

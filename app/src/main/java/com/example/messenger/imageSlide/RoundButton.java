@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.imageSlide;
+package com.example.messenger.imageSlide;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,7 +13,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.oureda.thunder.daydaypicture.R;
+import com.example.messenger.R;
 
 
 /**

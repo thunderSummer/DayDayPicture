@@ -1,8 +1,7 @@
-package com.oureda.thunder.daydaypicture.manager;
+package com.example.messenger.manager;
 
-import android.os.health.SystemHealthManager;
-
-import com.oureda.thunder.daydaypicture.util.SharedPreferenceUtil;
+import com.example.messenger.service.ServiceLive1;
+import com.example.messenger.util.SharedPreferenceUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -111,5 +110,18 @@ public class CacheManager {
     }
     public String  getJSONPostion(){
         return SharedPreferenceUtil.getInstance().getString("json_position");
+    }
+    public boolean getShouldLive(){
+        return SharedPreferenceUtil.getInstance().getBoolean("shouldLive",false);
+    }
+    public void setShouldLive(boolean b){
+        SharedPreferenceUtil.getInstance().putBoolean("shouldLive",b);
+    }
+    public void setIntervalLong(Long intervalLong){
+        SharedPreferenceUtil.getInstance().putLong("intervalLong",intervalLong);
+    }
+    public long getIntervalLong(){
+        long l = SharedPreferenceUtil.getInstance().getLong("intervalLong");
+        return l>System.currentTimeMillis()+60000?l:-1;
     }
 }

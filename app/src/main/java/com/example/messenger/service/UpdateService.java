@@ -1,20 +1,17 @@
-package com.oureda.thunder.daydaypicture.service;
+package com.example.messenger.service;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.oureda.thunder.daydaypicture.R;
-import com.oureda.thunder.daydaypicture.util.FileUtil;
+import com.example.messenger.R;
+import com.example.messenger.util.FileUtil;
 
 import java.io.File;
 

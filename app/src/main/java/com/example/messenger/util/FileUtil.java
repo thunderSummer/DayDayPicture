@@ -1,10 +1,9 @@
-package com.oureda.thunder.daydaypicture.util;
+package com.example.messenger.util;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 
-import com.oureda.thunder.daydaypicture.base.MyApplication;
+import com.example.messenger.base.MyApplication;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
 import org.junit.Test;
 

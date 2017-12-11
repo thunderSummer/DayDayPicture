@@ -1,4 +1,4 @@
-package com.oureda.thunder.daydaypicture.imageSlide;
+package com.example.messenger.imageSlide;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ProgressBar;
 
-import com.oureda.thunder.daydaypicture.R;
+import com.example.messenger.R;
 
 /**
  * Created by thunder on 17-7-8.

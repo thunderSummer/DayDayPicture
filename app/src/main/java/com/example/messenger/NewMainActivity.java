@@ -1,11 +1,10 @@
-package com.oureda.thunder.daydaypicture;
+package com.example.messenger;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +12,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.oureda.thunder.daydaypicture.imageSlide.BaseImage;
-import com.oureda.thunder.daydaypicture.listener.DownloadListener;
-import com.oureda.thunder.daydaypicture.service.PollingService;
-import com.oureda.thunder.daydaypicture.util.PollingUtils;
+import com.example.messenger.imageSlide.BaseImage;
+import com.example.messenger.service.PollingService;
+import com.example.messenger.util.PollingUtils;
 
 public class NewMainActivity extends AppCompatActivity {
     private BaseImage baseImage;
@@ -27,7 +25,7 @@ public class NewMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         broadcastReceiver =new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.oureda.thunder.daydaypicture.RECEIVER");
+        intentFilter.addAction("com.example.thunder.messenger.RECEIVER");
         registerReceiver(broadcastReceiver, intentFilter);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_main);
@@ -40,15 +38,20 @@ public class NewMainActivity extends AppCompatActivity {
 
 
     }
-    public class MyReceiver extends BroadcastReceiver {
+    private class MyReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            //更新UI
-            boolean  needUpdate = intent.getBooleanExtra("needUpdate",true);
-            Log.d("ss", "onReceive: sssss");
-            Toast.makeText(NewMainActivity.this,"正在更新资源包",Toast.LENGTH_LONG).show();
-            baseImage.restart();
+            int type = intent.getIntExtra("type",0);
+            if(type==1){
+                Toast.makeText(NewMainActivity.this,"正在更新资源包",Toast.LENGTH_LONG).show();
+                baseImage.restart();
+            }else if(type==2){
+                Toast.makeText(NewMainActivity.this,"资源包验证失败",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(NewMainActivity.this,HelloActivity.class));
+                finish();
+            }
+
         }
 
     }
